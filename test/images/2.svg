@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-100 -100 1100 1300">
+    <defs>
+        <style type="text/css"><![CDATA[
+            svg {
+              background-color: black;
+            }
+
+            circle, line {
+                stroke: white;
+                stroke-width: 50;
+                stroke-linecap: round;
+                fill: none;
+            }
+
+            text {
+              font-family: "Segoe UI";
+              font-size: 200px;
+              fill: white;
+              text-anchor: middle;
+            }
+        ]]></style>
+    </defs>
+
+    <circle r="425" cx="450" cy="450" />
+
+    <line x1="320" x2="580" y1="670" y2="670" />
+
+    <line x1="450" x2="450" y1="210" y2="555" />
+    <line x1="320" x2="450" y1="430" y2="555" />
+    <line x1="580" x2="450" y1="430" y2="555" />
+
+    <text x="450" y="1100">Error</text>
+</svg>
