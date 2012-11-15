@@ -18,6 +18,12 @@ svg2png("source.svg", "dest.png", 1.2, function (err) {
 
 The scale factor is relative to the SVG's `viewbox` or `width`/`height` attributes, for the record.
 
+To convert all svg files in a specified directory you may also use the CLI
+
+``` 
+svg2png directory
+```
+
 svg2png is built on the latest in [PhantomJS][] technology to render your SVGs using a headless WebKit instance. I have
 found this to produce much more accurate renderings than other solutions like GraphicsMagick or Inkscape. Plus, it's
 easy to install cross-platform due to the excellent [phantomjs][package] npm package—you don't even need to have
