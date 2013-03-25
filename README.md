@@ -25,3 +25,10 @@ PhantomJS in your `PATH`.
 
 [PhantomJS]: http://phantomjs.org/
 [package]: https://npmjs.org/package/phantomjs
+
+## CLI
+
+[@skyzyx][] made [a CLI version][] of this; you should go check it out if you're into using the command line.
+
+[@skyzyx]: https://github.com/skyzyx
+[a CLI version]: https://github.com/skyzyx/svg2png-cli
