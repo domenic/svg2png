@@ -4,3 +4,4 @@
 /test/
 /.jshintrc
 /.npmignore
+/.travis.yml
