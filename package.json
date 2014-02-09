@@ -1,7 +1,7 @@
 {
     "name": "svg2png",
     "description": "A SVG to PNG converter, using PhantomJS.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "Domenic Denicola <domenic@domenicdenicola.com> (http://domenic.me)",
     "license": "WTFPL",
     "repository": {
