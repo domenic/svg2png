@@ -1,0 +1,70 @@
+"use strict";
+
+var path = require("path");
+var fs = require("fs");
+var should = require("chai").should();
+var svg2png = require("..");
+
+specify("Scale 1.svg to 80%", function (done) {
+    svg2png(relative("images/1.svg"), relative("images/1-actual.png"), 0.8, function (err) {
+        if (err) {
+            return done(err);
+        }
+
+        var expected = fs.readFileSync(relative("images/1-expected.png"));
+        var actual = fs.readFileSync(relative("images/1-actual.png"));
+
+        actual.should.deep.equal(expected);
+
+        done();
+    });
+});
+
+specify("Scale 2.svg to 180%", function (done) {
+    svg2png(relative("images/2.svg"), relative("images/2-actual.png"), 1.8, function (err) {
+        if (err) {
+            return done(err);
+        }
+
+        var expected = fs.readFileSync(relative("images/2-expected.png"));
+        var actual = fs.readFileSync(relative("images/2-actual.png"));
+
+        actual.should.deep.equal(expected);
+
+        done();
+    });
+});
+
+specify("Omit scale argument for 3.svg", function (done) {
+    svg2png(relative("images/3.svg"), relative("images/3-actual.png"), function (err) {
+        if (err) {
+            return done(err);
+        }
+
+        var expected = fs.readFileSync(relative("images/3-expected.png"));
+        var actual = fs.readFileSync(relative("images/3-actual.png"));
+
+        actual.should.deep.equal(expected);
+
+        done();
+    });
+});
+
+it("should pass errors through", function (done) {
+    svg2png("doesnotexist.asdf", "doesnotexist.asdf2", 1.0, function (err) {
+        should.exist(err);
+        err.should.have.property("message").that.equals("Unable to load the source file.");
+
+        done();
+    });
+});
+
+after(function () {
+    fs.unlink(relative("images/1-actual.png"));
+    fs.unlink(relative("images/2-actual.png"));
+    fs.unlink(relative("images/3-actual.png"));
+});
+
+function relative(relPath) {
+    return path.resolve(__dirname, relPath);
+}
