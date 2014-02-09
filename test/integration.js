@@ -50,6 +50,21 @@ specify("Omit scale argument for 3.svg", function (done) {
     });
 });
 
+specify("No green border for 4.svg", function (done) {
+    svg2png(relative("images/4.svg"), relative("images/4-actual.png"), function (err) {
+        if (err) {
+            return done(err);
+        }
+
+        var expected = fs.readFileSync(relative("images/4-expected.png"));
+        var actual = fs.readFileSync(relative("images/4-actual.png"));
+
+        actual.should.deep.equal(expected);
+
+        done();
+    });
+});
+
 it("should pass errors through", function (done) {
     svg2png("doesnotexist.asdf", "doesnotexist.asdf2", 1.0, function (err) {
         should.exist(err);
@@ -63,6 +78,7 @@ after(function () {
     fs.unlink(relative("images/1-actual.png"));
     fs.unlink(relative("images/2-actual.png"));
     fs.unlink(relative("images/3-actual.png"));
+    fs.unlink(relative("images/4-actual.png"));
 });
 
 function relative(relPath) {
