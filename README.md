@@ -15,8 +15,18 @@ svg2png("source.svg", "dest.png", 1.2, function (err) {
     // 1.2×-sized PNGs for everyone!
 });
 ```
-
 The scale factor is relative to the SVG's `viewbox` or `width`/`height` attributes, for the record.
+
+We can also convert animation to multiple images:
+
+```js
+svg2pngs("source.svg", "dest.png", 3, 2, function (err) {
+    // take 3 images in 2 seconds
+});
+```
+
+The first image is always the first frame, and the last one is always the last frame after the given time.
+An incrementing number will be added to output images name.
 
 svg2png is built on the latest in [PhantomJS][] technology to render your SVGs using a headless WebKit instance. I have
 found this to produce much more accurate renderings than other solutions like GraphicsMagick or Inkscape. Plus, it's
