@@ -65,7 +65,16 @@ specify("No green border for 4.svg", function (done) {
     });
 });
 
-it("should pass errors through", function (done) {
+it("should pass through errors that occur while calculating dimensions", function (done) {
+    svg2png(relative("images/invalid.svg"), relative("images/invalid-actual.png"), function (err) {
+        should.exist(err);
+        err.should.have.property("message").and.match(/Unable to calculate dimensions./);
+
+        done();
+    });
+});
+
+it("should pass through errors about unloadable source files", function (done) {
     svg2png("doesnotexist.asdf", "doesnotexist.asdf2", 1.0, function (err) {
         should.exist(err);
         err.should.have.property("message").that.equals("Unable to load the source file.");
