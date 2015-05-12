@@ -1,6 +1,11 @@
 # SVG-to-PNG Converter Using PhantomJS
 
-You have a SVG file. For whatever reason, you need a PNG. **svg2png** can help.
+[![NPM version](https://img.shields.io/npm/v/svg2png.svg?)](https://www.npmjs.com/package/svg2png)
+[![Build Status](https://img.shields.io/travis/domenic/svg2png/master.svg)](https://travis-ci.org/domenic/svg2png)
+[![Dependency Status](https://img.shields.io/david/domenic/svg2png.svg)](https://david-dm.org/domenic/svg2png)
+[![devDependency Status](https://img.shields.io/david/dev/domenic/svg2png.svg)](https://david-dm.org/domenic/svg2png#info=devDependencies)
+
+You have an SVG file. For whatever reason, you need a PNG one. **svg2png** can help.
 
 ```js
 svg2png("source.svg", "dest.png", function (err) {
