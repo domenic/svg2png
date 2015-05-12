@@ -10,8 +10,8 @@
         "lib/"
     ],
     "scripts": {
-        "test": "mocha",
-        "lint": "jshint lib && jshint test"
+        "lint": "jshint lib test",
+        "test": "npm run lint && mocha"
     },
     "dependencies": {
         "phantomjs": "^1.9.16"
