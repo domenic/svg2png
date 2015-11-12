@@ -1,24 +1,24 @@
 {
-    "name": "svg2png",
-    "description": "A SVG to PNG converter, using PhantomJS",
-    "version": "1.1.1",
-    "author": "Domenic Denicola <d@domenic.me> (https://domenic.me)",
-    "license": "WTFPL",
-    "repository": "domenic/svg2png",
-    "main": "lib/svg2png.js",
-    "files": [
-        "lib/"
-    ],
-    "scripts": {
-        "test": "mocha",
-        "lint": "jshint lib && jshint test"
-    },
-    "dependencies": {
-        "phantomjs": "^1.9.18"
-    },
-    "devDependencies": {
-        "chai": "^3.4.1",
-        "jshint": "^2.8.0",
-        "mocha": "^2.3.3"
-    }
+  "name": "svg2png",
+  "description": "A SVG to PNG converter, using PhantomJS",
+  "version": "2.0.0",
+  "author": "Domenic Denicola <d@domenic.me> (https://domenic.me)",
+  "license": "WTFPL",
+  "repository": "domenic/svg2png",
+  "main": "lib/svg2png.js",
+  "files": [
+    "lib/"
+  ],
+  "scripts": {
+    "test": "mocha",
+    "lint": "jshint lib && jshint test"
+  },
+  "dependencies": {
+    "phantomjs": "^1.9.18"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "jshint": "^2.8.0",
+    "mocha": "^2.3.3"
+  }
 }
