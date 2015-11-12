@@ -14,11 +14,11 @@
         "lint": "jshint lib && jshint test"
     },
     "dependencies": {
-        "phantomjs": "^1.9.16"
+        "phantomjs": "^1.9.18"
     },
     "devDependencies": {
-        "chai": "^2.2.0",
-        "jshint": "^2.6.3",
-        "mocha": "^2.2.1"
+        "chai": "^3.4.1",
+        "jshint": "^2.8.0",
+        "mocha": "^2.3.3"
     }
 }
