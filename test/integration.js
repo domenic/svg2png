@@ -4,6 +4,7 @@ var path = require("path");
 var fs = require("fs");
 var should = require("chai").should();
 var svg2png = require("..");
+var hashFiles = require('hash-files');
 
 specify("Scale 1.svg to 80%", function (done) {
     svg2png(relative("images/1.svg"), relative("images/1-actual.png"), 0.8, function (err) {
@@ -11,8 +12,8 @@ specify("Scale 1.svg to 80%", function (done) {
             return done(err);
         }
 
-        var expected = fs.readFileSync(relative("images/1-expected.png"));
-        var actual = fs.readFileSync(relative("images/1-actual.png"));
+        var expected = hashFiles.sync({files:["images/1-expected.png"]});
+        var actual = hashFiles.sync({files:["images/1-actual.png"]});
 
         actual.should.deep.equal(expected);
 
@@ -26,8 +27,8 @@ specify("Scale 2.svg to 180%", function (done) {
             return done(err);
         }
 
-        var expected = fs.readFileSync(relative("images/2-expected.png"));
-        var actual = fs.readFileSync(relative("images/2-actual.png"));
+        var expected = hashFiles.sync({files:["images/2-expected.png"]});
+        var actual = hashFiles.sync({files:["images/2-actual.png"]});
 
         actual.should.deep.equal(expected);
 
@@ -41,8 +42,8 @@ specify("Omit scale argument for 3.svg", function (done) {
             return done(err);
         }
 
-        var expected = fs.readFileSync(relative("images/3-expected.png"));
-        var actual = fs.readFileSync(relative("images/3-actual.png"));
+        var expected = hashFiles.sync({files:["images/3-expected.png"]});
+        var actual = hashFiles.sync({files:["images/3-actual.png"]});
 
         actual.should.deep.equal(expected);
 
@@ -56,8 +57,8 @@ specify("No green border for 4.svg", function (done) {
             return done(err);
         }
 
-        var expected = fs.readFileSync(relative("images/4-expected.png"));
-        var actual = fs.readFileSync(relative("images/4-actual.png"));
+        var expected = hashFiles.sync({files:["images/4-expected.png"]});
+        var actual = hashFiles.sync({files:["images/4-actual.png"]});
 
         actual.should.deep.equal(expected);
 
@@ -71,8 +72,8 @@ specify("Scales 5.svg correctly despite viewBox + fixed width/height", function 
             return done(err);
         }
 
-        var expected = fs.readFileSync(relative("images/5-expected.png"));
-        var actual = fs.readFileSync(relative("images/5-actual.png"));
+        var expected = hashFiles.sync({files:["images/5-expected.png"]});
+        var actual = hashFiles.sync({files:["images/5-actual.png"]});
 
         actual.should.deep.equal(expected);
 
