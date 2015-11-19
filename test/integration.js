@@ -15,7 +15,7 @@ var RENDER_DIFFERENCE_TOLERANCE = 1024;
 function assertCloseEnough(file1, file2) {
     var stats1 = fs.statSync(file1);
     var stats2 = fs.statSync(file2);
-    (Math.abs(stats1.size - stats2.size) < RENDER_DIFFERENCE_TOLERANCE).should.be.ok;
+    (Math.abs(stats1.size - stats2.size) < RENDER_DIFFERENCE_TOLERANCE).should.equal(true);
 }
 
 specify("Scale 1.svg to 80%", function (done) {
@@ -69,7 +69,7 @@ specify("Scales 5.svg correctly despite viewBox + fixed width/height", function 
 });
 
 specify("Render an array of inputs to a single target directory", function (done) {
-    svg2png([ relative("images/3.svg"), relative("images/4.svg") ], relative('images/'), function (err) {
+    svg2png([ relative("images/3.svg"), relative("images/4.svg") ], relative("images/"), function (err) {
         if (err) {
             return done(err);
         }
@@ -82,7 +82,9 @@ specify("Render an array of inputs to a single target directory", function (done
 });
 
 specify("Render an array of inputs to an array of targets", function (done) {
-    svg2png([ relative("images/3.svg"), relative("images/4.svg") ], [ relative('images/3-actual.png'), relative('images/4-actual.png') ], function (err) {
+    var inFiles = [ relative("images/3.svg"), relative("images/4.svg") ];
+    var outFiles = [ relative("images/3-actual.png"), relative("images/4-actual.png") ];
+    svg2png(inFiles, outFiles, function (err) {
         if (err) {
             return done(err);
         }
