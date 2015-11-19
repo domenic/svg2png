@@ -68,6 +68,32 @@ specify("Scales 5.svg correctly despite viewBox + fixed width/height", function 
     });
 });
 
+specify("Render an array of inputs to a single target directory", function (done) {
+    svg2png([ relative("images/3.svg"), relative("images/4.svg") ], relative('images/'), function (err) {
+        if (err) {
+            return done(err);
+        }
+
+        assertCloseEnough(relative("images/3-expected.png"), relative("images/3-actual.png"));
+        assertCloseEnough(relative("images/4-expected.png"), relative("images/4-actual.png"));
+
+        done();
+    });
+});
+
+specify("Render an array of inputs to an array of targets", function (done) {
+    svg2png([ relative("images/3.svg"), relative("images/4.svg") ], [ relative('images/3-actual.png'), relative('images/4-actual.png') ], function (err) {
+        if (err) {
+            return done(err);
+        }
+
+        assertCloseEnough(relative("images/3-expected.png"), relative("images/3-actual.png"));
+        assertCloseEnough(relative("images/4-expected.png"), relative("images/4-actual.png"));
+
+        done();
+    });
+});
+
 it("should pass through errors that occur while calculating dimensions", function (done) {
     svg2png(relative("images/invalid.svg"), relative("images/invalid-actual.png"), function (err) {
         should.exist(err);
@@ -80,13 +106,15 @@ it("should pass through errors that occur while calculating dimensions", functio
 it("should pass through errors about unloadable source files", function (done) {
     svg2png("doesnotexist.asdf", "doesnotexist.asdf2", 1.0, function (err) {
         should.exist(err);
-        err.should.have.property("message").that.equals("Unable to load the source file.");
+        err.should.have.property("message").that.equals("[doesnotexist.asdf] Unable to load the source file.");
 
         done();
     });
 });
 
 after(function () {
+    fs.unlink(relative("images/3.png"));
+    fs.unlink(relative("images/4.png"));
     fs.unlink(relative("images/1-actual.png"));
     fs.unlink(relative("images/2-actual.png"));
     fs.unlink(relative("images/3-actual.png"));

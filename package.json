@@ -14,6 +14,7 @@
     "lint": "jshint lib && jshint test"
   },
   "dependencies": {
+    "bluebird": "^3.0.5",
     "phantomjs": "^1.9.18"
   },
   "devDependencies": {
