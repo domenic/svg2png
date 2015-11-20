@@ -18,6 +18,20 @@ svg2png("source.svg", "dest.png", 1.2, function (err) {
 
 The scale factor is relative to the SVG's `viewbox` or `width`/`height` attributes, for the record.
 
+Do you want to render many SVGs in one go? Totally possible!
+
+```js
+// Render to two specific targets
+svg2png([ 'source1.svg', 'source2.svg' ], [ 'source1.png', 'source2.png' ], 2, function(err) {
+  // Both files got rendered and scaled 2x
+});
+
+// Render to a directory
+svg2png([ 'my.svg', 'other.svg' ], 'images/', function(err) {
+  // We now have images/my.png and images/other.png
+});
+```
+
 svg2png is built on the latest in [PhantomJS][] technology to render your SVGs using a headless WebKit instance. I have
 found this to produce much more accurate renderings than other solutions like GraphicsMagick or Inkscape. Plus, it's
 easy to install cross-platform due to the excellent [phantomjs][package] npm package—you don't even need to have

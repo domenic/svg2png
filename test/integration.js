@@ -5,17 +5,25 @@ var fs = require("fs");
 var should = require("chai").should();
 var svg2png = require("..");
 
+// We can't reliably reproduce the baked PNGs across
+// different machines and platforms, so we'll instead
+// assert against the file sizes being within a certain
+// amount of each other. A better way of doing this would
+// be to do a difference check, but I don't want to
+// introduce additional complexity, size, or overhead
+var RENDER_DIFFERENCE_TOLERANCE = 1024;
+function assertCloseEnough(file1, file2) {
+    var stats1 = fs.statSync(file1);
+    var stats2 = fs.statSync(file2);
+    (Math.abs(stats1.size - stats2.size) < RENDER_DIFFERENCE_TOLERANCE).should.equal(true);
+}
+
 specify("Scale 1.svg to 80%", function (done) {
     svg2png(relative("images/1.svg"), relative("images/1-actual.png"), 0.8, function (err) {
         if (err) {
             return done(err);
         }
-
-        var expected = fs.readFileSync(relative("images/1-expected.png"));
-        var actual = fs.readFileSync(relative("images/1-actual.png"));
-
-        actual.should.deep.equal(expected);
-
+        assertCloseEnough(relative("images/1-expected.png"), relative("images/1-actual.png"));
         done();
     });
 });
@@ -25,12 +33,7 @@ specify("Scale 2.svg to 180%", function (done) {
         if (err) {
             return done(err);
         }
-
-        var expected = fs.readFileSync(relative("images/2-expected.png"));
-        var actual = fs.readFileSync(relative("images/2-actual.png"));
-
-        actual.should.deep.equal(expected);
-
+        assertCloseEnough(relative("images/2-expected.png"), relative("images/2-actual.png"));
         done();
     });
 });
@@ -40,12 +43,7 @@ specify("Omit scale argument for 3.svg", function (done) {
         if (err) {
             return done(err);
         }
-
-        var expected = fs.readFileSync(relative("images/3-expected.png"));
-        var actual = fs.readFileSync(relative("images/3-actual.png"));
-
-        actual.should.deep.equal(expected);
-
+        assertCloseEnough(relative("images/3-expected.png"), relative("images/3-actual.png"));
         done();
     });
 });
@@ -55,12 +53,7 @@ specify("No green border for 4.svg", function (done) {
         if (err) {
             return done(err);
         }
-
-        var expected = fs.readFileSync(relative("images/4-expected.png"));
-        var actual = fs.readFileSync(relative("images/4-actual.png"));
-
-        actual.should.deep.equal(expected);
-
+        assertCloseEnough(relative("images/4-expected.png"), relative("images/4-actual.png"));
         done();
     });
 });
@@ -70,11 +63,34 @@ specify("Scales 5.svg correctly despite viewBox + fixed width/height", function 
         if (err) {
             return done(err);
         }
+        assertCloseEnough(relative("images/5-expected.png"), relative("images/5-actual.png"));
+        done();
+    });
+});
 
-        var expected = fs.readFileSync(relative("images/5-expected.png"));
-        var actual = fs.readFileSync(relative("images/5-actual.png"));
+specify("Render an array of inputs to a single target directory", function (done) {
+    svg2png([ relative("images/3.svg"), relative("images/4.svg") ], relative("images/"), function (err) {
+        if (err) {
+            return done(err);
+        }
 
-        actual.should.deep.equal(expected);
+        assertCloseEnough(relative("images/3-expected.png"), relative("images/3-actual.png"));
+        assertCloseEnough(relative("images/4-expected.png"), relative("images/4-actual.png"));
+
+        done();
+    });
+});
+
+specify("Render an array of inputs to an array of targets", function (done) {
+    var inFiles = [ relative("images/3.svg"), relative("images/4.svg") ];
+    var outFiles = [ relative("images/3-actual.png"), relative("images/4-actual.png") ];
+    svg2png(inFiles, outFiles, function (err) {
+        if (err) {
+            return done(err);
+        }
+
+        assertCloseEnough(relative("images/3-expected.png"), relative("images/3-actual.png"));
+        assertCloseEnough(relative("images/4-expected.png"), relative("images/4-actual.png"));
 
         done();
     });
@@ -92,13 +108,15 @@ it("should pass through errors that occur while calculating dimensions", functio
 it("should pass through errors about unloadable source files", function (done) {
     svg2png("doesnotexist.asdf", "doesnotexist.asdf2", 1.0, function (err) {
         should.exist(err);
-        err.should.have.property("message").that.equals("Unable to load the source file.");
+        err.should.have.property("message").that.equals("[doesnotexist.asdf] Unable to load the source file.");
 
         done();
     });
 });
 
 after(function () {
+    fs.unlink(relative("images/3.png"));
+    fs.unlink(relative("images/4.png"));
     fs.unlink(relative("images/1-actual.png"));
     fs.unlink(relative("images/2-actual.png"));
     fs.unlink(relative("images/3-actual.png"));
