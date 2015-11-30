@@ -15,8 +15,16 @@ svg2png("source.svg", "dest.png", 1.2, function (err) {
     // 1.2×-sized PNGs for everyone!
 });
 ```
-
 The scale factor is relative to the SVG's `viewbox` or `width`/`height` attributes, for the record.
+
+Maybe you need an image with exact dimensions:
+
+```js
+svg2png("source.svg", "dest.png", {width:200, height:150}, function (err) {
+    // 200x150 pixel sized PNGs for everyone!
+});
+```
+The image will be centered and zoomed to best-fit but not stretched.
 
 svg2png is built on the latest in [PhantomJS][] technology to render your SVGs using a headless WebKit instance. I have
 found this to produce much more accurate renderings than other solutions like GraphicsMagick or Inkscape. Plus, it's

@@ -80,6 +80,51 @@ specify("Scales 5.svg correctly despite viewBox + fixed width/height", function 
     });
 });
 
+specify("Scales 1.svg to 100x200", function (done) {
+    svg2png(relative("images/1.svg"), relative("images/6-actual.png"), {width: 100, height:200}, function (err) {
+        if (err) {
+            return done(err);
+        }
+
+        var expected = fs.readFileSync(relative("images/6-expected.png"));
+        var actual = fs.readFileSync(relative("images/6-actual.png"));
+
+        actual.should.deep.equal(expected);
+
+        done();
+    });
+});
+
+specify("Scales 3.svg to width of 100", function (done) {
+    svg2png(relative("images/3.svg"), relative("images/7-actual.png"), {width: 100}, function (err) {
+        if (err) {
+            return done(err);
+        }
+
+        var expected = fs.readFileSync(relative("images/7-expected.png"));
+        var actual = fs.readFileSync(relative("images/7-actual.png"));
+
+        actual.should.deep.equal(expected);
+
+        done();
+    });
+});
+
+specify("Scales 3.svg to height of 100", function (done) {
+    svg2png(relative("images/3.svg"), relative("images/8-actual.png"), {height: 100}, function (err) {
+        if (err) {
+            return done(err);
+        }
+
+        var expected = fs.readFileSync(relative("images/8-expected.png"));
+        var actual = fs.readFileSync(relative("images/8-actual.png"));
+
+        actual.should.deep.equal(expected);
+
+        done();
+    });
+});
+
 it("should pass through errors that occur while calculating dimensions", function (done) {
     svg2png(relative("images/invalid.svg"), relative("images/invalid-actual.png"), function (err) {
         should.exist(err);
@@ -104,6 +149,9 @@ after(function () {
     fs.unlink(relative("images/3-actual.png"));
     fs.unlink(relative("images/4-actual.png"));
     fs.unlink(relative("images/5-actual.png"));
+    fs.unlink(relative("images/6-actual.png"));
+    fs.unlink(relative("images/7-actual.png"));
+    fs.unlink(relative("images/8-actual.png"));
 });
 
 function relative(relPath) {
