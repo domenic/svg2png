@@ -1,153 +1,50 @@
 "use strict";
+const path = require("path");
+const fs = require("fs");
+const glob = require("glob");
+const should = require("chai").should();
+const svg2png = require("..");
 
-var path = require("path");
-var fs = require("fs");
-var should = require("chai").should();
-var svg2png = require("..");
+const successTests = require("./success-tests/tests.json");
 
 // Note:
-// - 1.svg = 6.svg uses width/height, with no viewBox
+// - 1.svg uses width/height, with no viewBox
 // - 2.svg uses viewBox, with no width/height
-// - 3.svg = 7.svg = 8.svg uses neither
-// - 4.svg = 9.svg and 5.svg use width/height, viewBox, and even x/y (although x/y are zero)
+// - 3.svg uses neither
+// - 4.svg and 5.svg use width/height, viewBox, and even x/y (although x/y are zero)
 
-specify("Scale 1.svg to 80%", function (done) {
-    svg2png(relative("images/1.svg"), relative("images/1-actual.png"), 0.8, function (err) {
-        if (err) {
-            return done(err);
+function relative(relPath) {
+    return path.resolve(__dirname, relPath);
+}
+
+function successTest(test, index) {
+    specify(test.name, done => {
+        const args = [relative(`inputs/${test.file}`), relative(`success-tests/${index}-actual.png`)];
+
+        if ("resize" in test) {
+            args.push(test.resize);
         }
 
-        var expected = fs.readFileSync(relative("images/1-expected.png"));
-        var actual = fs.readFileSync(relative("images/1-actual.png"));
+        args.push(err => {
+            if (err) {
+                return done(err);
+            }
 
-        actual.should.deep.equal(expected);
+            const expected = fs.readFileSync(relative(`success-tests/${index}.png`));
+            const actual = fs.readFileSync(relative(`success-tests/${index}-actual.png`));
 
-        done();
+            actual.should.deep.equal(expected);
+            done();
+        });
+
+        svg2png(...args);
     });
-});
+}
 
-specify("Scale 2.svg to 180%", function (done) {
-    svg2png(relative("images/2.svg"), relative("images/2-actual.png"), 1.8, function (err) {
-        if (err) {
-            return done(err);
-        }
+successTests.forEach(successTest);
 
-        var expected = fs.readFileSync(relative("images/2-expected.png"));
-        var actual = fs.readFileSync(relative("images/2-actual.png"));
-
-        actual.should.deep.equal(expected);
-
-        done();
-    });
-});
-
-specify("Omit scale argument for 3.svg", function (done) {
-    svg2png(relative("images/3.svg"), relative("images/3-actual.png"), function (err) {
-        if (err) {
-            return done(err);
-        }
-
-        var expected = fs.readFileSync(relative("images/3-expected.png"));
-        var actual = fs.readFileSync(relative("images/3-actual.png"));
-
-        actual.should.deep.equal(expected);
-
-        done();
-    });
-});
-
-specify("No green border for 4.svg", function (done) {
-    svg2png(relative("images/4.svg"), relative("images/4-actual.png"), function (err) {
-        if (err) {
-            return done(err);
-        }
-
-        var expected = fs.readFileSync(relative("images/4-expected.png"));
-        var actual = fs.readFileSync(relative("images/4-actual.png"));
-
-        actual.should.deep.equal(expected);
-
-        done();
-    });
-});
-
-specify("Scales 5.svg correctly despite viewBox + fixed width/height", function (done) {
-    svg2png(relative("images/5.svg"), relative("images/5-actual.png"), 2, function (err) {
-        if (err) {
-            return done(err);
-        }
-
-        var expected = fs.readFileSync(relative("images/5-expected.png"));
-        var actual = fs.readFileSync(relative("images/5-actual.png"));
-
-        actual.should.deep.equal(expected);
-
-        done();
-    });
-});
-
-specify("Scales 6.svg to 100x200", function (done) {
-    svg2png(relative("images/1.svg"), relative("images/6-actual.png"), { width: 100, height: 200 }, function (err) {
-        if (err) {
-            return done(err);
-        }
-
-        var expected = fs.readFileSync(relative("images/6-expected.png"));
-        var actual = fs.readFileSync(relative("images/6-actual.png"));
-
-        actual.should.deep.equal(expected);
-
-        done();
-    });
-});
-
-specify("Scales 7.svg to width of 100", function (done) {
-    svg2png(relative("images/3.svg"), relative("images/7-actual.png"), { width: 100 }, function (err) {
-        if (err) {
-            return done(err);
-        }
-
-        var expected = fs.readFileSync(relative("images/7-expected.png"));
-        var actual = fs.readFileSync(relative("images/7-actual.png"));
-
-        actual.should.deep.equal(expected);
-
-        done();
-    });
-});
-
-specify("Scales 8.svg to height of 100", function (done) {
-    svg2png(relative("images/3.svg"), relative("images/8-actual.png"), { height: 100 }, function (err) {
-        if (err) {
-            return done(err);
-        }
-
-        var expected = fs.readFileSync(relative("images/8-expected.png"));
-        var actual = fs.readFileSync(relative("images/8-actual.png"));
-
-        actual.should.deep.equal(expected);
-
-        done();
-    });
-});
-
-specify("Scales 9.svg to height of 100", function (done) {
-    svg2png(relative("images/4.svg"), relative("images/9-actual.png"), { height: 100 }, function (err) {
-        if (err) {
-            return done(err);
-        }
-
-        var expected = fs.readFileSync(relative("images/9-expected.png"));
-        var actual = fs.readFileSync(relative("images/9-actual.png"));
-
-        actual.should.deep.equal(expected);
-
-        done();
-    });
-});
-
-it("should pass through errors that occur while calculating dimensions", function (done) {
-    svg2png(relative("images/invalid.svg"), relative("images/invalid-actual.png"), function (err) {
+it("should pass through errors that occur while calculating dimensions", done => {
+    svg2png(relative("inputs/invalid.svg"), relative("invalid-actual.png"), err => {
         should.exist(err);
         err.should.have.property("message").and.match(/Unable to calculate dimensions./);
 
@@ -155,8 +52,8 @@ it("should pass through errors that occur while calculating dimensions", functio
     });
 });
 
-it("should pass through errors about unloadable source files", function (done) {
-    svg2png("doesnotexist.asdf", "doesnotexist.asdf2", 1.0, function (err) {
+it("should pass through errors about unloadable source files", done => {
+    svg2png("doesnotexist.asdf", "doesnotexist.asdf2", 1.0, err => {
         should.exist(err);
         err.should.have.property("message").that.equals("Unable to load the source file.");
 
@@ -164,18 +61,8 @@ it("should pass through errors about unloadable source files", function (done) {
     });
 });
 
-after(function () {
-    fs.unlink(relative("images/1-actual.png"));
-    fs.unlink(relative("images/2-actual.png"));
-    fs.unlink(relative("images/3-actual.png"));
-    fs.unlink(relative("images/4-actual.png"));
-    fs.unlink(relative("images/5-actual.png"));
-    fs.unlink(relative("images/6-actual.png"));
-    fs.unlink(relative("images/7-actual.png"));
-    fs.unlink(relative("images/8-actual.png"));
-    fs.unlink(relative("images/9-actual.png"));
+after(() => {
+    for (const fileName of glob.sync(relative("success-tests/*-actual.png"))) {
+        fs.unlinkSync(fileName);
+    }
 });
-
-function relative(relPath) {
-    return path.resolve(__dirname, relPath);
-}

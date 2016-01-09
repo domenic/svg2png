@@ -1,0 +1,45 @@
+[
+    {
+        "name": "Scale 1.svg to 80%",
+        "file": "1.svg",
+        "resize": 0.8
+    },
+    {
+        "name": "Scale 2.svg to 180%",
+        "file": "2.svg",
+        "resize": 1.8
+    },
+    {
+        "name": "Omit scale argument for 3.svg",
+        "file": "3.svg"
+    },
+    {
+        "name": "No green border for 4.svg",
+        "file": "4.svg"
+    },
+    {
+        "name": "Scales 5.svg correctly despite viewBox + fixed width/height",
+        "file": "5.svg",
+        "resize": 2
+    },
+    {
+        "name": "Scales 1.svg to 100x200",
+        "file": "1.svg",
+        "resize": { "width": 100, "height": 200 }
+    },
+    {
+        "name": "Scales 3.svg to a width of 100",
+        "file": "3.svg",
+        "resize": { "width": 100 }
+    },
+    {
+        "name": "Scales 3.svg to a height of 100",
+        "file": "3.svg",
+        "resize": { "height": 100 }
+    },
+    {
+        "name": "Scales 4.svg to a height of 100",
+        "file": "4.svg",
+        "resize": { "height": "100" }
+    }
+]
