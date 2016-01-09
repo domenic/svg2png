@@ -1,54 +1,84 @@
 [
     {
-        "name": "width/height attributes only, scaled to 80%",
+        "name": "width/height attributes only: no resizing",
         "file": "width-height-only.svg",
-        "resize": 0.8
+        "notes to validate": "should be 550x600"
     },
     {
-        "name": "viewBox attribute only, scaled to 180%",
+        "name": "width/height attributes only: resize to smaller than it is",
+        "file": "width-height-only.svg",
+        "resize": { "width": 200, "height": 200 },
+        "notes to validate": "should be 200x200 and cropped"
+    },
+    {
+        "name": "width/height attributes only: resize to larger than it is",
+        "file": "width-height-only.svg",
+        "resize": { "width": 900, "height": 900 },
+        "notes to validate": "should be 900x900 and expanded with empty space in the bottom right"
+    },
+    {
+        "name": "viewBox attribute only: resized to 100x400",
         "file": "viewbox-only.svg",
-        "resize": 1.8
+        "resize": { "width": 100, "height": 400 },
+        "notes to validate": "should be 100x400 and vertically centered"
     },
     {
-        "name": "no size indicators, no resizing",
-        "file": "no-size-indicators.svg"
+        "name": "viewBox attribute only: resized to 100 width",
+        "file": "viewbox-only.svg",
+        "resize": { "width": 100 },
+        "notes to validate": "should be 100x118, nicely scaled"
     },
     {
-        "name": "width/height and viewBox attributes, no resizing; ensure it has no green borders",
-        "file": "width-height-viewbox.svg"
+        "name": "viewBox attribute only: resized to 100 height",
+        "file": "viewbox-only.svg",
+        "resize": { "height": 100 },
+        "notes to validate": "should be 85x100, nicely scaled"
     },
     {
-        "name": "width/height and viewBox attributes, scaled to 200%",
-        "file": "width-height-viewbox-2.svg",
-        "resize": 2
-    },
-    {
-        "name": "width/height attributes only, resized-with-centering to 100x200",
-        "file": "width-height-only.svg",
-        "resize": { "width": 100, "height": 200 }
-    },
-    {
-        "name": "no size indicators, resized to a width of 100",
-        "file": "no-size-indicators.svg",
-        "resize": { "width": 100 }
-    },
-    {
-        "name": "no size indicators, resized to a height of 100",
-        "file": "no-size-indicators.svg",
-        "resize": { "height": 100 }
-    },
-    {
-        "name": "width/height and viewBox attributes, resized to a height of 100",
-        "file": "width-height-viewbox.svg",
-        "resize": { "height": 100 }
-    },
-    {
-        "name": "100% width/height against a viewBox, no resizing",
-        "file": "percent-width-height-viewbox.svg"
-    },
-    {
-        "name": "100% width/height against a viewBox, scale to 200%",
+        "name": "percent width/height attributes and viewBox attribute: resized to 100x400",
         "file": "percent-width-height-viewbox.svg",
-        "resize": 2
+        "resize": { "width": 100, "height": 400 },
+        "notes to validate": "should be 100x400 and vertically centered, a full circle (not a quarter one)"
+    },
+    {
+        "name": "percent width/height attributes and viewBox attribute: resized to 100 width",
+        "file": "percent-width-height-viewbox.svg",
+        "resize": { "width": 100 },
+        "notes to validate": "should be 100x100, nicely scaled, a full circle (not a quarter one)"
+    },
+    {
+        "name": "percent width/height attributes and viewBox attribute: resized to 200 height",
+        "file": "percent-width-height-viewbox.svg",
+        "resize": { "height": 200 },
+        "notes to validate": "should be 200x200, nicely scaled, a full circle (not a quarter one)"
+    },
+    {
+        "name": "width/height and viewBox attributes: no resizing",
+        "file": "width-height-viewbox.svg",
+        "notes to validate": "should be 505x505 and not have any green borders"
+    },
+    {
+        "name": "width/height and viewBox attributes: resized to a height of 100",
+        "file": "width-height-viewbox.svg",
+        "resize": { "height": 100 },
+        "notes to validate": "should be 100x100 and not have any green borders"
+    },
+    {
+        "name": "width/height and viewBox attributes: resized to 100x600",
+        "file": "width-height-viewbox-2.svg",
+        "resize": { "width": 100, "height": 600 },
+        "notes to validate": "should be 100x600, vertically centered, and with a transparent background"
+    },
+    {
+        "name": "no width/height and no viewBox: resized to smaller than it is",
+        "file": "no-size-indicators.svg",
+        "resize": { "width": 100, "height": 100 },
+        "notes to validate": "should be cropped to upper left"
+    },
+    {
+        "name": "no width/height and no viewBox: resized to larger than it is",
+        "file": "no-size-indicators.svg",
+        "resize": { "width": 1000, "height": 1000 },
+        "notes to validate": "should be expanded with empty space in the bottom right"
     }
 ]

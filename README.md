@@ -3,49 +3,47 @@
 You have a SVG file. For whatever reason, you need a PNG. **svg2png** can help.
 
 ```js
-svg2png("source.svg", "dest.png", function (err) {
-    // PNGs for everyone!
-});
+const pn = require("pn"); // https://www.npmjs.com/package/pn
+const svg2png = require("svg2png");
+
+pn.readFile("source.svg")
+    .then(svg2png)
+    .then(buffer => fs.writeFile("dest.png", buffer))
+    .catch(e => console.error(e));
 ```
 
-Maybe you need to scale the image while converting? We can do that too:
+In the above example, we use the `width` and `height` attributes specified in the SVG file to automatically determine the size of the SVG. You can also explicitly set the size:
 
 ```js
-svg2png("source.svg", "dest.png", 1.2, function (err) {
-    // 1.2×-sized PNGs for everyone!
-});
-```
-The scale factor is relative to the SVG's `viewbox` or `width`/`height` attributes, for the record.
-
-Maybe you need an image with exact dimensions:
-
-```js
-svg2png("source.svg", "dest.png", { width: 200, height: 150 }, function (err) {
-    // 200x150 pixel sized PNGs for everyone!
-});
+svg2png(sourceBuffer, { width: 300, height: 400 })
+    .then(buffer => ...)
+    .catch(e => console.error(e));
 ```
 
-The image will be centered and zoomed to best-fit but not stretched. You can also provide just a single dimension and the other one will be inferred automatically:
-
-```js
-svg2png("source.svg", "dest.png", { width: 300 }, function (err) {
-    // 300 pixel-wide PNGs for everyone!
-});
-```
+This is especially useful for images without `width` or `height`s. You can even specify just one of them and (if the image has an appropriate `viewBox`) the other will be set to scale.
 
 ## How the conversion is done
 
-svg2png is built on the latest in [PhantomJS][] technology to render your SVGs using a headless WebKit instance. I have
-found this to produce much more accurate renderings than other solutions like GraphicsMagick or Inkscape. Plus, it's
-easy to install cross-platform due to the excellent [phantomjs][package] npm package—you don't even need to have
-PhantomJS in your `PATH`.
+svg2png is built on the latest in [PhantomJS](http://phantomjs.org/) technology to render your SVGs using a headless WebKit instance. I have found this to produce much more accurate renderings than other solutions like GraphicsMagick or Inkscape. Plus, it's easy to install cross-platform due to the excellent [phantomjs](https://npmjs.org/package/phantomjs) npm package—you don't even need to have PhantomJS in your `PATH`.
 
-[PhantomJS]: http://phantomjs.org/
-[package]: https://npmjs.org/package/phantomjs
+Rendering isn't perfect; we have a number of issues that are [blocked on PhantomJS](https://github.com/domenic/svg2png/labels/blocked%20on%20phantomjs) getting its act together and releasing a cross-platform version with updated WebKit.
+
+## Exact resizing behavior
+
+Previous versions of svg2png attempted to infer a good size based on the `width`, `height`, and `viewBox` attributes. As of our 3.0 release, we attempt to stick as close to the behavior of loading a SVG file in your browser as possible. The rules are:
+
+- Any `width` or `height` attributes that are in percentages are ignored and do not count for the subsequent rules.
+- The dimensions option `{ width, height }` overrides any `width` or `height` attributes in the SVG file, including for the subsequent rules. If a key is missing from the dimensions object (i.e. `{ width }` or `{ height }`) the corresponding attribute in the SVG file will be deleted.
+- `with` and `height` attributes without a `viewBox` attribute cause the output to be of those dimensions; this might crop the image or expand it with empty space to the bottom and to the right.
+- `width` and/or `height` attributes with a `viewBox` attribute cause the image to scale to those dimensions. If the ratio does not match the `viewBox`'s aspect ratio, the image will be expanded and centered with empty space in the extra dimensions. When a `viewBox` is present, one of either `width` or `height` can be omitted, with the missing one inferred from the `viewBox`'s aspect ratio.
+- When there are neither `width` nor `height` attributes, the promise rejects.
+
+One thing to note is that svg2png does not and cannot stretch your images to new aspect ratios.
 
 ## CLI
 
-[@skyzyx][] made [a CLI version][] of this; you should go check it out if you're into using the command line.
+TODO create a CLI interface; `--width` and `--height`, use stdin and stdout I guess??
 
-[@skyzyx]: https://github.com/skyzyx
-[a CLI version]: https://github.com/skyzyx/svg2png-cli
+## Node.js requirements
+
+svg2png uses the latest in ES2015 features, and as such requires a recent version of Node.js. Only the 5.x series is supported; anything lower than 5.0.0 which happens to work might break in any patch revision of svg2png and should not be used.

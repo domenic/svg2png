@@ -1,0 +1,28 @@
+[
+    {
+        "name": "invalid.svg",
+        "file": "invalid.svg"
+    },
+    {
+        "name": "no width/height attributes or viewBox attribute; no dimensions passed",
+        "file": "no-size-indicators.svg"
+    },
+    {
+        "name": "no width/height attributes; viewBox attribute; no dimensions passed",
+        "file": "viewbox-only.svg"
+    },
+    {
+        "name": "percent width/height attributes; viewBox attribute; no dimensions passed",
+        "file": "percent-width-height-viewbox.svg"
+    },
+    {
+        "name": "no width/height attributes or viewBox attribute; passing only width",
+        "file": "no-size-indicators.svg",
+        "resize": { "width": 100 }
+    },
+    {
+        "name": "no width/height attributes or viewBox attribute; passing only height",
+        "file": "no-size-indicators.svg",
+        "resize": { "width": 200 }
+    }
+]
