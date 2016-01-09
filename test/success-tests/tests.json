@@ -41,5 +41,14 @@
         "name": "width/height and viewBox attributes, resized to a height of 100",
         "file": "width-height-viewbox.svg",
         "resize": { "height": 100 }
+    },
+    {
+        "name": "100% width/height against a viewBox, no resizing",
+        "file": "percent-width-height-viewbox.svg"
+    },
+    {
+        "name": "100% width/height against a viewBox, scale to 200%",
+        "file": "percent-width-height-viewbox.svg",
+        "resize": 2
     }
 ]
