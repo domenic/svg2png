@@ -50,7 +50,21 @@ One thing to note is that svg2png does not and cannot stretch your images to new
 
 ## CLI
 
-TODO create a CLI interface; `--width` and `--height`, use stdin and stdout I guess??
+This package comes with a CLI version as well; you can install it globally with `npm install svg2png -g`. Use it as follows:
+
+```
+$ svg2png --help
+Converts SVGs to PNGs, using PhantomJS
+
+svg2png input.svg [--output=output.png] [--width=300] [--height=150]
+
+Options:
+  -o, --output  The output filename; if not provided, will be inferred  [string]
+  -w, --width   The output file width, in pixels                        [string]
+  -h, --height  The output file height, in pixels                       [string]
+  --help        Show help                                              [boolean]
+  --version     Show version number                                    [boolean]
+```
 
 ## Node.js requirements
 
