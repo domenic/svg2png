@@ -9,7 +9,6 @@ function relative(relPath) {
     return path.resolve(__dirname, relPath);
 }
 
-// TODO do this all sync maybe
 tests.forEach((test, index) => {
     fs.readFile(relative(`../inputs/${test.file}`))
         .then(input => svg2png(input, test.resize))

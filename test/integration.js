@@ -24,13 +24,38 @@ function successTest(test, index) {
     });
 }
 
+function successTestSync(test, index) {
+    specify(test.name, () => {
+        const input = fs.readFileSync(relative(`inputs/${test.file}`));
+        const expected = fs.readFileSync(relative(`success-tests/${index}.png`));
+
+        const output = svg2png.sync(input, test.resize);
+        output.should.deep.equal(expected);
+    });
+}
+
 function failureTest(test) {
-    specify(`(negative test) ${test.name}`, () => {
+    specify(test.name, () => {
         const input = fs.readFileSync(relative(`inputs/${test.file}`));
 
         return svg2png(input, test.resize).should.be.rejectedWith(/width or height/i);
     });
 }
 
-successTests.forEach(successTest);
-failureTests.forEach(failureTest);
+function failureTestSync(test) {
+    specify(test.name, () => {
+        const input = fs.readFileSync(relative(`inputs/${test.file}`));
+
+        (() => svg2png.sync(input, test.resize)).should.throw(/width or height/i);
+    });
+}
+
+describe("async", () => {
+    describe("should fulfill", () => successTests.forEach(successTest));
+    describe("should reject", () => failureTests.forEach(failureTest));
+});
+
+describe("sync", () => {
+    describe("should return", () => successTests.forEach(successTestSync));
+    describe("should throw", () => failureTests.forEach(failureTestSync));
+});
