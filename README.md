@@ -3,10 +3,10 @@
 You have a SVG file. For whatever reason, you need a PNG. **svg2png** can help.
 
 ```js
-const pn = require("pn"); // https://www.npmjs.com/package/pn
+const fs = require("pn/fs"); // https://www.npmjs.com/package/pn
 const svg2png = require("svg2png");
 
-pn.readFile("source.svg")
+fs.readFile("source.svg")
     .then(svg2png)
     .then(buffer => fs.writeFile("dest.png", buffer))
     .catch(e => console.error(e));
@@ -68,4 +68,4 @@ Options:
 
 ## Node.js requirements
 
-svg2png uses the latest in ES2015 features, and as such requires a recent version of Node.js. Only the 5.x series is supported; anything lower than 5.0.0 which happens to work might break in any patch revision of svg2png and should not be used.
+svg2png uses the latest in ES2015 features, and as such requires a recent version of Node.js. Only the 5.x series onward is supported; anything lower than 5.0.0 which happens to work might break in any patch revision of svg2png and should not be used.
