@@ -80,5 +80,10 @@
         "file": "no-size-indicators.svg",
         "resize": { "width": 1000, "height": 1000 },
         "notes to validate": "should be expanded with empty space in the bottom right"
+    },
+    {
+        "name": "width/height in px, and viewBox: no resizing",
+        "file": "width-height-viewbox-3.svg",
+        "notes to validate": "should be 148x35"
     }
 ]
