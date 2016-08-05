@@ -17,7 +17,7 @@
     "lint": "jshint lib && jshint test"
   },
   "dependencies": {
-    "phantomjs": "^1.9.19",
+    "phantomjs-prebuilt": "^2.1.10",
     "pn": "^1.0.0",
     "yargs": "^3.31.0"
   },
