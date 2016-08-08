@@ -32,7 +32,7 @@ const outputBuffer = svg2png.sync(sourceBuffer, optionalWidthAndOrHeight);
 
 ## How the conversion is done
 
-svg2png is built on the latest in [PhantomJS](http://phantomjs.org/) technology to render your SVGs using a headless WebKit instance. I have found this to produce much more accurate renderings than other solutions like GraphicsMagick or Inkscape. Plus, it's easy to install cross-platform due to the excellent [phantomjs](https://npmjs.org/package/phantomjs) npm package—you don't even need to have PhantomJS in your `PATH`.
+svg2png is built on the latest in [PhantomJS](http://phantomjs.org/) technology to render your SVGs using a headless WebKit instance. I have found this to produce much more accurate renderings than other solutions like GraphicsMagick or Inkscape. Plus, it's easy to install cross-platform due to the excellent [phantomjs](https://www.npmjs.com/package/phantomjs-prebuilt) npm package—you don't even need to have PhantomJS in your `PATH`.
 
 Rendering isn't perfect; we have a number of issues that are [blocked on PhantomJS](https://github.com/domenic/svg2png/labels/blocked%20on%20phantomjs) getting its act together and releasing a cross-platform version with updated WebKit.
 
