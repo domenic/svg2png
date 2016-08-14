@@ -38,12 +38,6 @@ const argv = yargs
 const input = fs.readFileSync(argv._[0]);
 const output = svg2png.sync(input, { width: argv.width, height: argv.height });
 const outputFilename = argv.output || path.basename(argv._[0], ".svg") + ".png";
-const writeFlag = ( argv.overwrite ) ? 'w' : 'wx';
-
-try {
-    if ( fs.statSync(outputFilename) && argv.overwrite === false ) throw 'File already exists.';
-    fs.writeFileSync(outputFilename, output, { flag: writeFlag });
-} catch(e) {
-    console.log(e);
-}
+const writeFlag = (argv.overwrite) ? "w" : "wx";
+fs.writeFileSync(outputFilename, output, {flag: writeFlag});
 
