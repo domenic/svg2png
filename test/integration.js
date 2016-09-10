@@ -63,7 +63,7 @@ function successTestCLI(test, index) {
 
         const expected = fs.readFileSync(relative(`success-tests/${index}.png`));
         const output = fs.readFileSync(outputFilename);
-        // expect(output).to.deep.equal(expected);
+        expect(output).to.deep.equal(expected);
     });
 }
 
