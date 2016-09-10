@@ -114,5 +114,11 @@
         "file": "external-file.svg",
         "includeURL": true,
         "notes to validate": "should show the kittens"
+    },
+    {
+        "name": "using a font inlined as a data URL",
+        "file": "data-url-font.svg",
+        "options": { "width": 500, "height": 500 },
+        "notes to validate": "the X should be centered"
     }
 ]
