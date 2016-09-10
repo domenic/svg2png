@@ -7,49 +7,49 @@
     {
         "name": "width/height attributes only: resize to smaller than it is",
         "file": "width-height-only.svg",
-        "resize": { "width": 200, "height": 200 },
+        "options": { "width": 200, "height": 200 },
         "notes to validate": "should be 200x200 and cropped"
     },
     {
         "name": "width/height attributes only: resize to larger than it is",
         "file": "width-height-only.svg",
-        "resize": { "width": 900, "height": 900 },
+        "options": { "width": 900, "height": 900 },
         "notes to validate": "should be 900x900 and expanded with empty space in the bottom right"
     },
     {
         "name": "viewBox attribute only: resized to 100x400",
         "file": "viewbox-only.svg",
-        "resize": { "width": 100, "height": 400 },
+        "options": { "width": 100, "height": 400 },
         "notes to validate": "should be 100x400 and vertically centered"
     },
     {
         "name": "viewBox attribute only: resized to 100 width",
         "file": "viewbox-only.svg",
-        "resize": { "width": 100 },
+        "options": { "width": 100 },
         "notes to validate": "should be 100x118, nicely scaled"
     },
     {
         "name": "viewBox attribute only: resized to 100 height",
         "file": "viewbox-only.svg",
-        "resize": { "height": 100 },
+        "options": { "height": 100 },
         "notes to validate": "should be 85x100, nicely scaled"
     },
     {
         "name": "percent width/height attributes and viewBox attribute: resized to 100x400",
         "file": "percent-width-height-viewbox.svg",
-        "resize": { "width": 100, "height": 400 },
+        "options": { "width": 100, "height": 400 },
         "notes to validate": "should be 100x400 and vertically centered, a full circle (not a quarter one)"
     },
     {
         "name": "percent width/height attributes and viewBox attribute: resized to 100 width",
         "file": "percent-width-height-viewbox.svg",
-        "resize": { "width": 100 },
+        "options": { "width": 100 },
         "notes to validate": "should be 100x100, nicely scaled, a full circle (not a quarter one)"
     },
     {
         "name": "percent width/height attributes and viewBox attribute: resized to 200 height",
         "file": "percent-width-height-viewbox.svg",
-        "resize": { "height": 200 },
+        "options": { "height": 200 },
         "notes to validate": "should be 200x200, nicely scaled, a full circle (not a quarter one)"
     },
     {
@@ -60,25 +60,25 @@
     {
         "name": "width/height and viewBox attributes: resized to a height of 100",
         "file": "width-height-viewbox.svg",
-        "resize": { "height": 100 },
+        "options": { "height": 100 },
         "notes to validate": "should be 100x100 and not have any green borders"
     },
     {
         "name": "width/height and viewBox attributes: resized to 100x600",
         "file": "width-height-viewbox-2.svg",
-        "resize": { "width": 100, "height": 600 },
+        "options": { "width": 100, "height": 600 },
         "notes to validate": "should be 100x600, vertically centered, and with a transparent background"
     },
     {
         "name": "no width/height and no viewBox: resized to smaller than it is",
         "file": "no-size-indicators.svg",
-        "resize": { "width": 100, "height": 100 },
+        "options": { "width": 100, "height": 100 },
         "notes to validate": "should be cropped to upper left"
     },
     {
         "name": "no width/height and no viewBox: resized to larger than it is",
         "file": "no-size-indicators.svg",
-        "resize": { "width": 1000, "height": 1000 },
+        "options": { "width": 1000, "height": 1000 },
         "notes to validate": "should be expanded with empty space in the bottom right"
     },
     {
@@ -94,13 +94,25 @@
     {
         "name": "with media queries, resized",
         "file": "media-queries.svg",
-        "resize": { "width": 500 },
+        "options": { "width": 500 },
         "notes to validate": "zebra should be blue; size should be 500x1032"
     },
     {
         "name": "viewBox only regression test (https://github.com/domenic/svg2png/issues/52#issuecomment-244912343)",
         "file": "viewbox-only-2.svg",
-        "resize": { "width": 640, "height": 640 },
+        "options": { "width": 640, "height": 640 },
         "notes to validate": "should not fail"
+    },
+    {
+        "name": "including an external file with <image> (setting filename option)",
+        "file": "external-file.svg",
+        "includeFilename": true,
+        "notes to validate": "should show the kittens"
+    },
+    {
+        "name": "including an external file with <image> (setting url option)",
+        "file": "external-file.svg",
+        "includeURL": true,
+        "notes to validate": "should show the kittens"
     }
 ]

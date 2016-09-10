@@ -1,28 +1,42 @@
 [
     {
         "name": "invalid.svg",
-        "file": "invalid.svg"
+        "file": "invalid.svg",
+        "expectedErrorSubstring": "width or height"
     },
     {
         "name": "no width/height attributes or viewBox attribute; no dimensions passed",
-        "file": "no-size-indicators.svg"
+        "file": "no-size-indicators.svg",
+        "expectedErrorSubstring": "width or height"
     },
     {
         "name": "no width/height attributes; viewBox attribute; no dimensions passed",
-        "file": "viewbox-only.svg"
+        "file": "viewbox-only.svg",
+        "expectedErrorSubstring": "width or height"
     },
     {
         "name": "percent width/height attributes; viewBox attribute; no dimensions passed",
-        "file": "percent-width-height-viewbox.svg"
+        "file": "percent-width-height-viewbox.svg",
+        "expectedErrorSubstring": "width or height"
     },
     {
         "name": "no width/height attributes or viewBox attribute; passing only width",
         "file": "no-size-indicators.svg",
-        "resize": { "width": 100 }
+        "options": { "width": 100 },
+        "expectedErrorSubstring": "width or height"
     },
     {
         "name": "no width/height attributes or viewBox attribute; passing only height",
         "file": "no-size-indicators.svg",
-        "resize": { "width": 200 }
+        "options": { "width": 200 },
+        "expectedErrorSubstring": "width or height"
+    },
+    {
+        "name": "providing both filename and url options",
+        "file": "external-file.svg",
+        "includeFilename": true,
+        "includeURL": true,
+        "expectedErrorSubstring": "both filename and url",
+        "skipCLI": true
     }
 ]

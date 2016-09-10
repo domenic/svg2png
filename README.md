@@ -22,6 +22,18 @@ svg2png(sourceBuffer, { width: 300, height: 400 })
 
 This is especially useful for images without `width` or `height`s. You can even specify just one of them and (if the image has an appropriate `viewBox`) the other will be set to scale.
 
+Finally, some SVG files reference external resources using relative paths. You can set them up for correct conversion by passing the `filename` or `url` option:
+
+```js
+svg2png(sourceBuffer, { url: "https://example.com/awesomeness.svg" })
+    .then(buffer => ...)
+    .catch(e => console.error(e));
+
+svg2png(sourceBuffer, { filename: path.resolve(__dirname, "images/fun.svg") })
+    .then(buffer => ...)
+    .catch(e => console.error(e));
+```
+
 ## Sync variant
 
 There's also a sync variant, for use in your shell scripts:

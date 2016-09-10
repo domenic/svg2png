@@ -32,7 +32,7 @@ const argv = yargs
 // TODO if anyone asks for it: support stdin/stdout when run that way
 
 const input = fs.readFileSync(argv._[0]);
-const output = svg2png.sync(input, { width: argv.width, height: argv.height });
+const output = svg2png.sync(input, { width: argv.width, height: argv.height, filename: argv._[0] });
 
 const outputFilename = argv.output || path.basename(argv._[0], ".svg") + ".png";
 fs.writeFileSync(outputFilename, output, { flag: "wx" });
