@@ -92,7 +92,7 @@
         "notes to validate": "zebra should be red; size should be 167x344"
     },
     {
-        "name": "with media queries",
+        "name": "with media queries, resized",
         "file": "media-queries.svg",
         "resize": { "width": 500 },
         "notes to validate": "zebra should be blue; size should be 500x1032"
