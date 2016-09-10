@@ -96,5 +96,11 @@
         "file": "media-queries.svg",
         "resize": { "width": 500 },
         "notes to validate": "zebra should be blue; size should be 500x1032"
+    },
+    {
+        "name": "viewBox only regression test (https://github.com/domenic/svg2png/issues/52#issuecomment-244912343)",
+        "file": "viewbox-only-2.svg",
+        "resize": { "width": 640, "height": 640 },
+        "notes to validate": "should not fail"
     }
 ]
