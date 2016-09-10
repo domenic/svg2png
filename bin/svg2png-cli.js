@@ -25,8 +25,8 @@ const argv = yargs
         describe: "The output file height, in pixels"
     })
     .demand(1)
-    .addHelpOpt("help")
-    .version(packageJSON.version, "version")
+    .help(false)
+    .version()
     .argv;
 
 // TODO if anyone asks for it: support stdin/stdout when run that way
