@@ -39,7 +39,7 @@ svg2png(sourceBuffer, { filename: path.resolve(__dirname, "images/fun.svg") })
 There's also a sync variant, for use in your shell scripts:
 
 ```js
-const outputBuffer = svg2png.sync(sourceBuffer, optionalWidthAndOrHeight);
+const outputBuffer = svg2png.sync(sourceBuffer, options);
 ```
 
 ## How the conversion is done
