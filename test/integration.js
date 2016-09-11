@@ -126,10 +126,10 @@ function cliArgs(test, index) {
 
     const outputFilename = relative(`cli-test-output/${index}.png`);
     const args = [test.file, `--output=${outputFilename}`];
-    if (test.options.width) {
+    if (test.options && test.options.width) {
         args.push(`--width=${test.options.width}`);
     }
-    if (test.options.height) {
+    if (test.options && test.options.height) {
         args.push(`--height=${test.options.height}`);
     }
 
