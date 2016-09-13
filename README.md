@@ -80,4 +80,4 @@ Options:
 
 ## Node.js requirements
 
-svg2png uses the latest in ES2015 features, and as such requires a recent version of Node.js. Only the 5.x series onward is supported; anything lower than 5.0.0 which happens to work might break in any patch revision of svg2png and should not be used.
+svg2png uses the latest in ES2015 features, and as such requires a recent version of Node.js. Only the 6.x series onward is supported.
