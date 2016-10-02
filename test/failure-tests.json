@@ -38,5 +38,12 @@
         "includeURL": true,
         "expectedErrorSubstring": "both filename and url",
         "skipCLI": true
+    },
+    {
+        "name": "providing phantomjsPath options but it's lambda version",
+        "file": "external-file.svg",
+        "phantomjsPath": true,
+        "expectedErrorSubstring": "write EPIPE",
+        "skipCLI": true
     }
 ]
