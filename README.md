@@ -54,7 +54,7 @@ Previous versions of svg2png attempted to infer a good size based on the `width`
 
 - Any `width` or `height` attributes that are in percentages are ignored and do not count for the subsequent rules.
 - The dimensions option `{ width, height }` overrides any `width` or `height` attributes in the SVG file, including for the subsequent rules. If a key is missing from the dimensions object (i.e. `{ width }` or `{ height }`) the corresponding attribute in the SVG file will be deleted.
-- `with` and `height` attributes without a `viewBox` attribute cause the output to be of those dimensions; this might crop the image or expand it with empty space to the bottom and to the right.
+- `width` and `height` attributes without a `viewBox` attribute cause the output to be of those dimensions; this might crop the image or expand it with empty space to the bottom and to the right.
 - `width` and/or `height` attributes with a `viewBox` attribute cause the image to scale to those dimensions. If the ratio does not match the `viewBox`'s aspect ratio, the image will be expanded and centered with empty space in the extra dimensions. When a `viewBox` is present, one of either `width` or `height` can be omitted, with the missing one inferred from the `viewBox`'s aspect ratio.
 - When there are neither `width` nor `height` attributes, the promise rejects.
 
