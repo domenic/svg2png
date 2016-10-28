@@ -120,5 +120,10 @@
         "file": "data-url-font.svg",
         "options": { "width": 500, "height": 500 },
         "notes to validate": "the X should be centered"
+    },
+    {
+        "name": "using non-ASCII characters",
+        "file": "non-ascii-text.svg",
+        "notes to validate": "text should have diacritics (tête-à-tête)"
     }
 ]
