@@ -32,6 +32,45 @@ describe("CLI", () => {
     after(() => rimraf.sync(relative("cli-test-output")));
 });
 
+describe("multiple", () => {
+  describe("async", () => {
+      specify("multiple files", () => {
+          const input = fs.readFileSync(path.resolve(__dirname, "inputs", "width-height-only.svg"));
+          const expected = [
+              fs.readFileSync(relative("success-tests/1.png")),
+              fs.readFileSync(relative("success-tests/2.png"))
+          ];
+          const options = {
+              dimensions: [
+                  { "width": 200, "height": 200 },
+                  { "width": 900, "height": 900 }
+              ]
+          };
+
+          return svg2png(input, options).then(output => expect(output).to.deep.equal(expected));
+      });
+  });
+
+  describe("sync", () => {
+      specify("multiple files", () => {
+          const input = fs.readFileSync(path.resolve(__dirname, "inputs", "width-height-only.svg"));
+          const expected = [
+              fs.readFileSync(relative("success-tests/1.png")),
+              fs.readFileSync(relative("success-tests/2.png"))
+          ];
+          const options = {
+              dimensions: [
+                  { "width": 200, "height": 200 },
+                  { "width": 900, "height": 900 }
+              ]
+          };
+
+          const output = svg2png.sync(input, options);
+          expect(output).to.deep.equal(expected);
+      });
+  });
+});
+
 
 function relative(relPath) {
     return path.resolve(__dirname, relPath);

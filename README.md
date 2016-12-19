@@ -22,6 +22,17 @@ svg2png(sourceBuffer, { width: 300, height: 400 })
 
 This is especially useful for images without `width` or `height`s. You can even specify just one of them and (if the image has an appropriate `viewBox`) the other will be set to scale.
 
+It is also possible to specify dimensions as an array. This will generate the images for all specified dimensions in a single run of PhantomJS, making it more efficient than calling `svg2png` multiple times.
+
+```js
+svg2png(sourceBuffer, { dimensions: [{ width: 300, height: 400 }, { width: 600, height: 800 }] })
+    .then(buffers => {
+        const buffer300 = buffer[0];
+        const buffer600 = buffer[1];
+    })
+    .catch(e => console.error(e));
+```
+
 Finally, some SVG files reference external resources using relative paths. You can set them up for correct conversion by passing the `filename` or `url` option:
 
 ```js
