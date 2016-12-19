@@ -110,7 +110,7 @@ function failureTestCLI(test, index) {
         const cliOutput = childProcess.spawnSync(process.execPath, args);
         expect({
             status: cliOutput.status,
-            stdout: cliOutput.stdout.toString(),
+            stdout: cliOutput.stdout.toString()
         }).to.deep.equal({
             status: 1,
             stdout: ""

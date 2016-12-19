@@ -1,4 +1,6 @@
 "use strict";
+/* eslint-disable no-console */
+
 const path = require("path");
 const fs = require("pn/fs");
 const svg2png = require("../..");
