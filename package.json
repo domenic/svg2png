@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "file-url": "^2.0.0",
-    "phantomjs-prebuilt": "^2.1.14",
+    "phantomjs": "1.9.19",
     "pn": "^1.0.0",
     "yargs": "^6.5.0"
   },
