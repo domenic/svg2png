@@ -60,6 +60,18 @@ Previous versions of svg2png attempted to infer a good size based on the `width`
 
 One thing to note is that svg2png does not and cannot stretch your images to new aspect ratios.
 
+## Background color
+
+The option `backgroundColor` adds a background color to SVG files with a transparent background.
+For example, to set the width, height, and background color:
+```javascript
+{
+    width: 100,
+    height: 100,
+    backgroundColor: 'red'
+}
+```
+
 ## CLI
 
 This package comes with a CLI version as well; you can install it globally with `npm install svg2png -g`. Use it as follows:
