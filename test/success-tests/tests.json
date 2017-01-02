@@ -125,5 +125,11 @@
         "name": "using non-ASCII characters",
         "file": "non-ascii-text.svg",
         "notes to validate": "text should have diacritics (tête-à-tête)"
+    },
+    {
+        "name": "setting background color",
+        "file": "transparent-background.svg",
+        "options": { "backgroundColor": "red" },
+        "notes to validate": "should be red background"
     }
 ]
