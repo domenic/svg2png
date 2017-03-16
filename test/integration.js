@@ -7,6 +7,7 @@ const rimraf = require("rimraf");
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 const svg2png = require("..");
+const phantom = require("phantom");
 
 chai.use(chaiAsPromised);
 const expect = require("chai").expect;
@@ -14,6 +15,14 @@ const expect = require("chai").expect;
 const normalizeTests = require("./normalize-tests.js");
 const successTests = normalizeTests(require("./success-tests/tests.json"));
 const failureTests = normalizeTests(require("./failure-tests.json"));
+
+let phantomInstance;
+
+describe("phantom-node", () => {
+    describe("should fulfill", () => successTests.forEach(successTestPhantom));
+    describe("should reject", () => failureTests.forEach(failureTestPhantom));
+    after(() => phantomInstance.exit());
+});
 
 describe("async", () => {
     describe("should fulfill", () => successTests.forEach(successTest));
@@ -32,9 +41,35 @@ describe("CLI", () => {
     after(() => rimraf.sync(relative("cli-test-output")));
 });
 
+function createPhantomJS() {
+    if (phantomInstance) {
+        return Promise.resolve(phantomInstance);
+    }
+    return phantom.create()
+        .then(instance => {
+            phantomInstance = instance;
+            return instance;
+        });
+}
 
 function relative(relPath) {
     return path.resolve(__dirname, relPath);
+}
+
+function successTestPhantom(test, index) {
+    specify(`${test.name} [phantom-node]`, () => {
+        const input = fs.readFileSync(test.file);
+        const expected = fs.readFileSync(relative(`success-tests/${index}.png`));
+
+        return createPhantomJS()
+            .then(instance => {
+                const options = Object.assign({}, test.options, { phantomJS: instance });
+                return svg2png(input, options);
+            })
+            .then(output => {
+                return expect(output).to.deep.equal(expected);
+            });
+    });
 }
 
 function successTest(test, index) {
@@ -87,6 +122,17 @@ function failureTest(test) {
         const input = fs.readFileSync(test.file);
 
         return expect(svg2png(input, test.options)).to.be.rejectedWith(new RegExp(test.expectedErrorSubstring, "i"));
+    });
+}
+
+function failureTestPhantom(test) {
+    specify(test.name, () => {
+        const input = fs.readFileSync(test.file);
+        return createPhantomJS()
+            .then(instance => {
+                const options = Object.assign({}, test.options, { phantomJS: instance });
+                return expect(svg2png(input, options)).to.be.rejectedWith(new RegExp(test.expectedErrorSubstring, "i"));
+            });
     });
 }
 
