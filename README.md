@@ -42,6 +42,25 @@ There's also a sync variant, for use in your shell scripts:
 const outputBuffer = svg2png.sync(sourceBuffer, options);
 ```
 
+## Custom PhantomJS
+
+All of the examples above create a new instance of the PhantomJS CLI process on every execution - this has an inherent overhead for each subsequent call. The `options` object can take a [custom `phantomJS` implementation](https://github.com/amir20/phantomjs-node) in order to preserve PhantomJS instances in memory across multiple calls, for example:
+
+```js
+const phantom = require("phantom");
+const instance = 
+phantom.create()
+    .then(instance => Promise.all([
+        svg2png(sourceBuffer1, { phantomJS: instance }),
+        svg2png(sourceBuffer2, { phantomJS: instance }),
+        svg2png(sourceBufferN, { phantomJS: instance })
+    ]))
+    .then(pngs => ...)
+    .then(() => {
+        instance.exit();
+    })
+```
+
 ## How the conversion is done
 
 svg2png is built on the latest in [PhantomJS](http://phantomjs.org/) technology to render your SVGs using a headless WebKit instance. I have found this to produce much more accurate renderings than other solutions like GraphicsMagick or Inkscape. Plus, it's easy to install cross-platform due to the excellent [phantomjs](https://www.npmjs.com/package/phantomjs-prebuilt) npm package—you don't even need to have PhantomJS in your `PATH`.
