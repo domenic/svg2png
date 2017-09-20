@@ -1,6 +1,6 @@
 "use strict";
 const path = require("path");
-const fs = require("fs");
+const fs = require("pn/fs");
 const childProcess = require("child_process");
 const mkdirp = require("mkdirp");
 const rimraf = require("rimraf");
@@ -33,11 +33,12 @@ function relative(relPath) {
 }
 
 function successTest(test, index) {
-    specify(test.name, () => {
-        const input = fs.readFileSync(test.file);
-        const expected = fs.readFileSync(relative(`success-tests/${index}.png`));
+    specify(test.name, async () => {
+        const input = await fs.readFile(test.file);
+        const expected = await fs.readFile(relative(`success-tests/${index}.png`));
+        const actual = await svg2png(input, test.options);
 
-        return svg2png(input, test.options).then(output => expect(output).to.deep.equal(expected));
+        expect(actual).to.deep.equal(expected);
     });
 }
 
