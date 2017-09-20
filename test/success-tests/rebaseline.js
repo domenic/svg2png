@@ -1,6 +1,5 @@
 "use strict";
 
-const { EOL } = require("os");
 const fs = require("pn/fs");
 const path = require("path");
 
@@ -17,5 +16,5 @@ tests.forEach((test, index) => {
     fs.readFile(test.file)
         .then(input => svg2png(input, test.options))
         .then(buffer => fs.writeFile(relative(`${index}.png`), buffer))
-        .catch(e => process.stderr.write(`${test.file}${EOL.repeat(2)}${e.stack}${EOL.repeat(3)}`));
+        .catch(e => process.stderr.write(`${test.file}\n\n${e.stack}\n\n\n`));
 });

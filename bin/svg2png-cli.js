@@ -4,7 +4,6 @@
 
 "use strict";
 
-const { EOL } = require("os");
 const fs = require("pn/fs");
 const path = require("path");
 const yargs = require("yargs");
@@ -13,7 +12,7 @@ const packageJSON = require("../package.json");
 const svg2png = require("..");
 
 const argv = yargs
-    .usage(`${packageJSON.description}${EOL.repeat(2)}${packageJSON.name} input.svg ` +
+    .usage(`${packageJSON.description}\n\n${packageJSON.name} input.svg ` +
            `[--output=output.png] [--width=300] [--height=150]`)
     .option("o", {
         alias: "output",
@@ -44,6 +43,6 @@ fs.readFile(inputFilename)
     .then(input => svg2png(input, { width: argv.width, height: argv.height, filename: inputFilename }))
     .then(output => fs.writeFile(outputFilename, output, { flag: "wx" }))
     .catch(e => {
-        process.stderr.write(`${e.stack}${EOL}`);
+        process.stderr.write(`${e.stack}\n`);
         process.exit(1);
     });
