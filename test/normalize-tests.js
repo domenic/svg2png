@@ -1,7 +1,6 @@
 "use strict";
-
-const fileURL = require("file-url");
 const path = require("path");
+const fileURL = require("file-url");
 
 module.exports = tests => tests.map(test => {
     const normalized = Object.assign({}, test);

@@ -1,8 +1,7 @@
 "use strict";
 
-const fs = require("pn/fs");
 const path = require("path");
-
+const fs = require("pn/fs");
 const svg2png = require("../..");
 
 const normalizeTests = require("../normalize-tests.js");

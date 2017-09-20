@@ -3,13 +3,11 @@
 /* eslint-disable no-process-exit */
 
 "use strict";
-
 const fs = require("pn/fs");
 const path = require("path");
 const yargs = require("yargs");
-
-const packageJSON = require("../package.json");
 const svg2png = require("..");
+const packageJSON = require("../package.json");
 
 const argv = yargs
     .usage(`${packageJSON.description}\n\n${packageJSON.name} input.svg ` +

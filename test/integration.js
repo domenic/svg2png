@@ -1,17 +1,15 @@
 "use strict";
-
+const path = require("path");
+const fs = require("fs");
+const childProcess = require("child_process");
+const mkdirp = require("mkdirp");
+const rimraf = require("rimraf");
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
-const childProcess = require("child_process");
-const fs = require("fs");
-const mkdirp = require("mkdirp");
-const path = require("path");
-const rimraf = require("rimraf");
-
 const svg2png = require("..");
 
 chai.use(chaiAsPromised);
-const expect = chai.expect;
+const expect = require("chai").expect;
 
 const normalizeTests = require("./normalize-tests.js");
 const successTests = normalizeTests(require("./success-tests/tests.json"));
