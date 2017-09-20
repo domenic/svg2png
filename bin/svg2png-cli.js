@@ -1,13 +1,19 @@
 #!/usr/bin/env node
+
+/* eslint-disable no-process-exit */
+
 "use strict";
-const fs = require("fs");
+
+const { EOL } = require("os");
+const fs = require("pn/fs");
 const path = require("path");
 const yargs = require("yargs");
-const svg2png = require("..");
+
 const packageJSON = require("../package.json");
+const svg2png = require("..");
 
 const argv = yargs
-    .usage(`${packageJSON.description}\n\n${packageJSON.name} input.svg ` +
+    .usage(`${packageJSON.description}${EOL.repeat(2)}${packageJSON.name} input.svg ` +
            `[--output=output.png] [--width=300] [--height=150]`)
     .option("o", {
         alias: "output",
@@ -31,8 +37,13 @@ const argv = yargs
 
 // TODO if anyone asks for it: support stdin/stdout when run that way
 
-const input = fs.readFileSync(argv._[0]);
-const output = svg2png.sync(input, { width: argv.width, height: argv.height, filename: argv._[0] });
+const inputFilename = argv._[0];
+const outputFilename = argv.output || `${path.basename(inputFilename, ".svg")}.png`;
 
-const outputFilename = argv.output || path.basename(argv._[0], ".svg") + ".png";
-fs.writeFileSync(outputFilename, output, { flag: "wx" });
+fs.readFile(inputFilename)
+    .then(input => svg2png(input, { width: argv.width, height: argv.height, filename: inputFilename }))
+    .then(output => fs.writeFile(outputFilename, output, { flag: "wx" }))
+    .catch(e => {
+        process.stderr.write(`${e.stack}${EOL}`);
+        process.exit(1);
+    });
