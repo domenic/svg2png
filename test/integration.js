@@ -1,6 +1,6 @@
 "use strict";
 const path = require("path");
-const fs = require("fs");
+const fs = require("pn/fs");
 const childProcess = require("child_process");
 const mkdirp = require("mkdirp");
 const rimraf = require("rimraf");
@@ -20,11 +20,6 @@ describe("async", () => {
     describe("should reject", () => failureTests.forEach(failureTest));
 });
 
-describe("sync", () => {
-    describe("should return", () => successTests.forEach(successTestSync));
-    describe("should throw", () => failureTests.forEach(failureTestSync));
-});
-
 describe("CLI", () => {
     before(() => mkdirp.sync(relative("cli-test-output")));
     describe("should succeed", () => successTests.forEach(successTestCLI));
@@ -38,21 +33,12 @@ function relative(relPath) {
 }
 
 function successTest(test, index) {
-    specify(test.name, () => {
-        const input = fs.readFileSync(test.file);
-        const expected = fs.readFileSync(relative(`success-tests/${index}.png`));
+    specify(test.name, async () => {
+        const input = await fs.readFile(test.file);
+        const expected = await fs.readFile(relative(`success-tests/${index}.png`));
+        const actual = await svg2png(input, test.options);
 
-        return svg2png(input, test.options).then(output => expect(output).to.deep.equal(expected));
-    });
-}
-
-function successTestSync(test, index) {
-    specify(test.name, () => {
-        const input = fs.readFileSync(test.file);
-        const expected = fs.readFileSync(relative(`success-tests/${index}.png`));
-
-        const output = svg2png.sync(input, test.options);
-        expect(output).to.deep.equal(expected);
+        expect(actual).to.deep.equal(expected);
     });
 }
 
@@ -87,14 +73,6 @@ function failureTest(test) {
         const input = fs.readFileSync(test.file);
 
         return expect(svg2png(input, test.options)).to.be.rejectedWith(new RegExp(test.expectedErrorSubstring, "i"));
-    });
-}
-
-function failureTestSync(test) {
-    specify(test.name, () => {
-        const input = fs.readFileSync(test.file);
-
-        expect(() => svg2png.sync(input, test.options)).to.throw(new RegExp(test.expectedErrorSubstring, "i"));
     });
 }
 

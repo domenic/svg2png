@@ -1,5 +1,4 @@
 "use strict";
-/* eslint-disable no-console */
 
 const path = require("path");
 const fs = require("pn/fs");
@@ -8,13 +7,17 @@ const svg2png = require("../..");
 const normalizeTests = require("../normalize-tests.js");
 const tests = normalizeTests(require("./tests.json"));
 
-function relative(relPath) {
-    return path.resolve(__dirname, relPath);
-}
+(async() => {
+    let index = 0;
+    for (const test of tests) {
+        try {
+            const buffer = await svg2png(test.file, test.options);
 
-tests.forEach((test, index) => {
-    fs.readFile(test.file)
-        .then(input => svg2png(input, test.options))
-        .then(buffer => fs.writeFile(relative(`${index}.png`), buffer))
-        .catch(e => console.error(`${test.file}\n\n${e.stack}\n\n\n`));
-});
+            await fs.writeFile(path.resolve(__dirname, `${index}.png`), buffer);
+        } catch (e) {
+            process.stdout.write(`${test.file}\n\n${e.stack}\n\n\n`);
+        }
+
+        index++;
+    }
+})();
