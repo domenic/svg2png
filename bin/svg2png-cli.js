@@ -24,6 +24,10 @@ const argv = yargs
         type: "string",
         describe: "The output file height, in pixels"
     })
+    .option("ignore-page-errors", {
+        type: "boolean",
+        describe: "Suppress any errors from JS inside the image"
+    })
     .demand(1)
     .help(false)
     .version()
@@ -32,7 +36,7 @@ const argv = yargs
 // TODO if anyone asks for it: support stdin/stdout when run that way
 
 const input = fs.readFileSync(argv._[0]);
-const output = svg2png.sync(input, { width: argv.width, height: argv.height, filename: argv._[0] });
+const output = svg2png.sync(input, { width: argv.width, height: argv.height, filename: argv._[0], ignorePageErrors: argv.ignorePageErrors });
 
 const outputFilename = argv.output || path.basename(argv._[0], ".svg") + ".png";
 fs.writeFileSync(outputFilename, output, { flag: "wx" });
