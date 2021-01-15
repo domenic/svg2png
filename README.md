@@ -60,6 +60,17 @@ Previous versions of svg2png attempted to infer a good size based on the `width`
 
 One thing to note is that svg2png does not and cannot stretch your images to new aspect ratios.
 
+
+## Set the SVG Fill Value
+You can also change the svg's output color on teh fly by passing a `fill` value as one of the options.
+
+```js
+svg2png(sourceBuffer, { width: 300, height: 400, fill: '#ff0000' })
+    .then(buffer => ...)
+    .catch(e => console.error(e));
+```
+Typically this is a hex value for the svg's desired fill color.
+
 ## CLI
 
 This package comes with a CLI version as well; you can install it globally with `npm install svg2png -g`. Use it as follows:
@@ -74,6 +85,7 @@ Options:
   -o, --output  The output filename; if not provided, will be inferred  [string]
   -w, --width   The output file width, in pixels                        [string]
   -h, --height  The output file height, in pixels                       [string]
+  -f, --fill    The value for the svg "fill" attribute                  [string]
   --help        Show help                                              [boolean]
   --version     Show version number                                    [boolean]
 ```
